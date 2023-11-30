@@ -1,0 +1,51 @@
+def operation():
+    historique = []  # Liste pour stocker l'historique des opérations
+    while True:
+        try:
+            nombre_utilisateur = int(input("Combien de nombres souhaitez-vous entrer ? "))
+            nombres = []
+            for i in range(nombre_utilisateur):
+                chiffre = float(input(f"Entrez le nombre {i + 1} : "))
+                nombres.append(chiffre)
+
+            operations = input("Entrez la séquence d'opérations que vous voulez (+, -, *, / séparées par des espaces) : ")
+            operations_list = operations.split()
+
+            result = nombres[0]
+            for i in range(1, len(nombres)):
+                if operations_list[i - 1] == '+':
+                    result += nombres[i]
+                elif operations_list[i - 1] == '-':
+                    result -= nombres[i]
+                elif operations_list[i - 1] == '*':
+                    result *= nombres[i]
+                elif operations_list[i - 1] == '/':
+                    if nombres[i] != 0:
+                        result /= nombres[i]
+                    else:
+                        print("Erreur : Division par zéro")
+                        return
+
+            # Affichage uniquement du résultat
+            print(f"Le résultat est : {result}")
+
+            # Ajout de l'opération à l'historique
+            historique.append(f"{operations.join(map(str, nombres))} = {result}")
+            #effectuer plusieurs oppérations
+            continuer = input("Voulez-vous effectuer une autre opération ? (o/n) ")
+            if continuer != 'o':
+                # Afficher l'historique
+                print("Historique des opérations :")
+                for operation in historique:
+                    print(operation)
+                print("A la prochaine")
+                break  # Quitte la boucle si l'utilisateur ne souhaite pas continuer
+
+        except ValueError as e:
+            print(f"Erreur : {e}")
+        except Exception as e:
+            print(f"Une erreur inattendue s'est produite : {e}")
+
+# Utilisation de la calculatrice
+operation()
+
